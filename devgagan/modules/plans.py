@@ -160,7 +160,7 @@ async def transfer_premium(client, message):
                 f"👤 **To:** {new_user.mention}\n"
                 f"⏳ **Expiry Date:** {expiry_str_in_ist}\n\n"
                 f"__Powered by"
-                f""
+                f"🇩 🇮 🇬 🇬 🇮 🇩 🇮 🇬 🇮"
             )
             
             # Notification to the new user
@@ -173,7 +173,7 @@ async def transfer_premium(client, message):
                     f"⏳ **Expiry Date:** {expiry_str_in_ist}\n"
                     f"📅 **Transferred On:** {current_time}\n\n"
                     f"__Enjoy the Service!__ ✨"
-                    f""
+                    f"🇩 🇮 🇬 🇬 🇮 🇩 🇮 🇬 🇮"
                 )
             )
         else:
