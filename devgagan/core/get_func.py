@@ -82,7 +82,10 @@ async def upload_media(sender, target_chat_id, file, caption, edit, topic_id):
         upload_method = await fetch_upload_method(sender)  # Fetch the upload method (Pyrogram or Telethon)
         metadata = video_metadata(file)
         width, height, duration = metadata['width'], metadata['height'], metadata['duration']
-        thumb_path = await screenshot(file, duration, sender)
+        try:
+            thumb_path = await screenshot(file, duration, sender)
+        except Exception:
+            thumb_path = None
 
         video_formats = {'mp4', 'mkv', 'avi', 'mov'}
         document_formats = {'pdf', 'docx', 'txt', 'epub'}
@@ -465,6 +468,7 @@ async def copy_message_with_chat_id(app, userbot, sender, chat_id, message_id, e
                 result = await app.send_photo(target_chat_id, file, caption=final_caption, reply_to_message_id=topic_id)
             elif msg.video or msg.document:
                 freecheck = await chk_user(chat_id, sender)
+                file_size = get_message_file_size(msg)
                 if file_size > size_limit and (freecheck == 1 or pro is None):
                     await edit.delete()
                     await split_and_upload_file(app, sender, target_chat_id, file, caption, topic_id)
@@ -848,8 +852,10 @@ async def handle_large_file(file, sender, edit, caption):
     duration = metadata['duration']
     width = metadata['width']
     height = metadata['height']
-    
-    thumb_path = await screenshot(file, duration, sender)
+    try:
+        thumb_path = await screenshot(file, duration, sender)
+    except Exception:
+        thumb_path = None
     try:
         if file_extension in VIDEO_EXTENSIONS:
             dm = await pro.send_video(
